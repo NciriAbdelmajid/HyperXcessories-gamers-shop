@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import '../AddProd.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import '../UpdateProd.css';
 
-export default function AddProduct({ handlePost, categories }) {
+export default function UpdateProduct({ categories, handleUpdate }) {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [CategoryId, setCategoryId] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
 
-    const newProduct = {
+    const updatedProduct = {
       name,
       imageUrl,
       price,
@@ -25,7 +23,7 @@ export default function AddProduct({ handlePost, categories }) {
       UserId: 1,
     };
 
-    handlePost(newProduct);
+    handleUpdate(location.state.id, updatedProduct);
 
     setName('');
     setImageUrl('');
@@ -36,8 +34,8 @@ export default function AddProduct({ handlePost, categories }) {
   };
 
   return (
-    <div className="add-product-form">
-      <h2>Add New Product</h2>
+    <div className="update-product-form">
+      <h2>Update Your Product</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -81,7 +79,7 @@ export default function AddProduct({ handlePost, categories }) {
             ))}
           </select>
         </div>
-        <button type="submit">Add Product</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

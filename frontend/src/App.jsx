@@ -1,49 +1,81 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from './components/Login.jsx'
-import Register from './components/Register.jsx'
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
 import AddProduct from './components/AddProduct.jsx';
-// import AllProducts from './components/AllProducts.jsx';
 import Home from './components/Home.jsx';
-import axios from 'axios'
+import UpdateProduct from './components/UpdateProduct.jsx';
+import axios from 'axios';
+
 function App() {
- const[data,setData]=useState([])
+  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
 
- useEffect(()=>fetchProd(),[])
-const fetch=()=>{
-  axios.get(`http://localhost:3000/api/users/getAll`).then((res)=>{
-    setData(res.data)
-    console.log("Fetched data:", res.data)
-    
-  }).catch((error)=>console.log(error)
-  )
+  useEffect(() => {
+    fetchProd();
+    fetchCategories();
+  }, []);
+
+  const fetchProd = () => {
+    axios.get(`http://localhost:3000/api/product/getAll`)
+      .then((res) => {
+        setData(res.data);
+        console.log("Fetched data:", res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handlePost = (body) => {
+    axios.post(`http://localhost:3000/api/product/add`, body)
+      .then((data) => {
+        console.log(data);
+        fetchProd();
+      })
+      .catch(error => console.log(error));
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/category/getAll");
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  const deletePost=(id)=>{
+    axios.delete(`http://localhost:3000/api/product/delete/${id}`)
+    .then((res)=>{
+        console.log(res)
+        fetchProd()
+    })
+    .catch((error)=>{console.log(error)
+    })
 }
-const fetchProd=()=>{
-  axios.get(`http://localhost:3000/api/product/getAll`).then((res)=>{
-    setData(res.data)
-    console.log("Fetched data:", res.data)
+
+const handleUpdate=(id,body)=>{
+  axios.put(`http://localhost:3000/api/product/update/${id}`,body)
+  .then((res)=>{
+    console.log(res);
+    fetchProd()
+  })
+  .catch((error)=>{
+    console.log(error);
     
-  }).catch((error)=>console.log(error)
-  )
+  })
 }
-
-
-
 
   return (
     <BrowserRouter>
-    <Routes>
-    <Route path="/home" element={<Home data={data} />}>
-    </Route>
-    <Route path="/add" element={<AddProduct  />}>
-    </Route>
-      <Route path="/login" element={<Login />}>
-      </Route>
-      <Route path="/register" element={<Register />}></Route>
-      {/* <Route path="/allProducts" element={<AllProducts  data={data}/>}></Route> */}
-    </Routes>
-  </BrowserRouter>
-  )
+      <Routes>
+        <Route path="/home" element={<Home data={data} deletePost={deletePost}  />} />
+        <Route path="/add" element={<AddProduct handlePost={handlePost} categories={categories} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/update" element={<UpdateProduct categories={categories} handleUpdate={handleUpdate} />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

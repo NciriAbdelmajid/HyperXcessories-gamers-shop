@@ -1,0 +1,56 @@
+/* Container Styling */
+.update-product-form {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #282828; 
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); 
+}
+
+.update-product-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #4CAF50; 
+    font-size: 2rem; 
+}
+
+.update-product-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.update-product-form form input,
+.update-product-form form select {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #4CAF50; 
+    border-radius: 5px; 
+    background-color: #1c1c1c; 
+    color: #f5f5f5;
+    font-size: 1rem; 
+}
+
+.update-product-form form input:focus,
+.update-product-form form select:focus {
+    border-color: #66ff66; 
+    outline: none;
+}
+
+.update-product-form form button {
+    width: 100%; 
+    padding: 10px; 
+    background-color: #4CAF50; 
+    border: none;
+    border-radius: 5px; 
+    color: #f5f5f5; 
+    font-size: 1.2rem; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-product-form form button:hover {
+    background-color: #66ff66; 
+}

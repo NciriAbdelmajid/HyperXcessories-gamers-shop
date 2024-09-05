@@ -3,7 +3,7 @@ import ProductDetails from "./ProductDetails.jsx";
 import '../Home.css';
 // import AllProducts from "./AllProducts.jsx";
 
-export default function Home({ data }) {
+export default function Home({ data ,deletePost}) {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const handleDropdown = () => {
@@ -35,7 +35,7 @@ export default function Home({ data }) {
            
             <div className="container_cards">
                 {data.map((elem) => {
-                    return <ProductDetails key={elem.id} elem={elem} />;
+                    return <ProductDetails key={elem.id} elem={elem} deletePost={deletePost} />;
                 })}
             </div>
            

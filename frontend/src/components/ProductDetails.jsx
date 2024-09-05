@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
-export default function ProductDetails({elem}){
+export default function ProductDetails({elem,deletePost}){
 
-
+   const navigate = useNavigate();
 
     return(
  <div>
@@ -22,8 +23,10 @@ export default function ProductDetails({elem}){
        quantity:{elem.quantity}
        </div>
        <div >
-       <button>delete</button>
-       <button>update</button>
+       <button onClick={()=>{deletePost(elem.id)
+       console.log('e.id',elem.id);
+      }}>delete</button>
+       <button onClick={()=>navigate("/update" ,{state:{id:elem.id}})}>update</button>
        </div>
     </div>
     </div>
